@@ -53,12 +53,7 @@ int main(){
             if(aux == 0){
                 cont++;
             }
-        }
-
-        if (cont == 11)
-        {
-            gerado = numero;
-        }    
+        } 
     }
 
     if(cont < 11){
