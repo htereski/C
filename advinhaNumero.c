@@ -16,7 +16,7 @@ int main(){
     //valor aleatório gerado pelo computador
     gerado = (rand() % 98) + 1;
 
-    //printf("\n%d\n", gerado);
+    printf("\n%d\n", gerado);
     while (numero != gerado)
     {
 
@@ -30,10 +30,10 @@ int main(){
             scanf("%d", &numero);
         }
 
-        if((numero > min) && (numero <= gerado)){
+        if((numero > min) && (numero < gerado)){
             min = numero;
         }
-        else if((numero < max) && (numero >= gerado)){
+        else if((numero < max) && (numero > gerado)){
             max = numero;
         }
 
@@ -41,14 +41,10 @@ int main(){
             cont++;
         }
 
-        //Validações de parada
+        //Validação de parada
         if(cont > 10){
             gerado = numero;
         }
-
-        if(cont == 11){
-            gerado = numero;
-        } 
     }
 
     if(cont < 11){
