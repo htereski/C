@@ -16,7 +16,7 @@ int main(){
     //valor aleatório gerado pelo computador
     gerado = (rand() % 98) + 1;
 
-    printf("\n%d\n", gerado);
+    //printf("\n%d\n", gerado);
     while (numero != gerado)
     {
 
