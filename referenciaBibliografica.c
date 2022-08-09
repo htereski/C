@@ -14,12 +14,19 @@ int main(){
     int primeiro = 100, ultimo = 0;
     int qtd_nome = 0, qtd_sobre = 0;
 
-    printf("\nDigite seu nome completo: ");
-    gets(nome_entrada);
+    do{
+        printf("\nDigite seu nome completo: ");
+        gets(nome_entrada);
+        
+        for(i = 0; nome_entrada[i] != '\0'; i++)
+            if(nome_entrada[i] == ' ' && nome_entrada[i+1] != '\0' && nome_entrada[i+1] != ' ')
+                cont++;
+    }while(cont < 1);
+
+    cont = 0;
     
-    for(i = 0; i < TAM; i++){
+    for(i = 0; i < TAM; i++)
         posicao[i] = -1;
-    }
 
     for(i = 0; nome_entrada[i] != '\0'; i++){
         if(nome_entrada[i] == ' '){
@@ -40,12 +47,10 @@ int main(){
     }
 
     for(i = 0; nome_entrada[i] != '\0'; i++){
-        if(i > ultimo){
+        if(i > ultimo)
             qtd_sobre++;
-        }
-        if(i < primeiro){
+        if(i < primeiro)
             qtd_nome++;
-        }
     }
 
     for(i = 0; nome_entrada[i] != '\0'; i++){
@@ -73,7 +78,7 @@ int main(){
 
     nome_entrada[cont] = '\0';
 
-    printf("\nSeu nome em referencia bibliografica %s\n\n", nome_referencia);
+    printf("\nSeu nome em referencia bibliografica: %s\n\n", nome_referencia);
 
     return 0;
 }
