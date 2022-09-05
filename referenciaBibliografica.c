@@ -4,81 +4,100 @@
 
 int main(){
 
-    char nome_entrada[TAM];
-    char nome_referencia[TAM];
-    int posicao[TAM];
-    int i = 0;
-    int j = 0;
-    int k = 0;
-    int cont = 0;
-    int primeiro = 100, ultimo = 0;
-    int qtd_nome = 0, qtd_sobre = 0;
-
-    do{
-        printf("\nDigite seu nome completo: ");
-        gets(nome_entrada);
-        
-        for(i = 0; nome_entrada[i] != '\0'; i++)
-            if(nome_entrada[i] == ' ' && nome_entrada[i+1] != '\0' && nome_entrada[i+1] != ' ')
-                cont++;
-    }while(cont < 1);
-
-    cont = 0;
+    int deseja;
     
-    for(i = 0; i < TAM; i++)
-        posicao[i] = -1;
+    do{
+        printf("\n*****************************");
+        printf("\nDeseja cadastrar um nome?");
+        printf("\n-1 SIM");
+        printf("\n-2 NAO");
+        printf("\n*****************************\n");
+        scanf("%d", &deseja);
 
-    for(i = 0; nome_entrada[i] != '\0'; i++){
-        if(nome_entrada[i] == ' '){
-            posicao[i] = i;
+        if(deseja < 1 || deseja > 2)
+            printf("\n[ERRO] Digite uma opcao valida!");
+    }while(deseja < 1 || deseja > 2);
+    system("cls");
+
+    if(deseja == 1){
+        do{
+            printf("Quantos nomes voce deseja cadastrar?\n");
+            scanf("%d", &deseja);
+            system("cls");
+
+            if(deseja < 1)
+                printf("Digite um numero maior que ZERO!\n");
+        }while(deseja < 1);
+        system("cls");
+
+        char nomes[deseja][TAM];
+        char referencia[deseja][TAM];
+        int maior[deseja][1];
+        int i, j, k;
+
+        for(i = 0; i < deseja; i++){
+            fflush(stdin);
+            printf("Digite o nome %d: ", i+1);
+            gets(nomes[i]);
         }
-        k++;
-    }
+        system("cls");
 
-    for(i = 0; nome_entrada[i] != '\0'; i++){
-        if(posicao[i] != -1){
-            if(posicao[i] > ultimo){
-                ultimo = posicao[i];
+
+        for(i = 0; i < deseja; i++)
+            maior[i][0] = -1;
+        
+
+        for(i = 0; i < deseja; i++){
+            for(j = 0; nomes[i][j] != '\0'; j++){
+                if(nomes[i][j] == ' '){
+                    maior[i][0] = j;
+                }
             }
-            if(posicao[i] < primeiro){
-                primeiro = posicao[i];
+        }
+
+        for(i = 0; i < deseja; i++){
+            k = 0;
+            for(j = maior[i][0]; nomes[i][j] != '\0'; j++){
+                referencia[i][k] = nomes[i][j];
+                k++;
             }
+
+            referencia[i][k] = ' ';
+            k++;
+
+            for(j = 0; j < maior[i][0]-1; j++){
+                if(nomes[i][j] == ' '){
+                    referencia[i][k] = nomes[i][j+1];
+                    referencia[i][k+1] = '.';
+                    k += 2;
+                    referencia[i][k] = ' ';
+                    k++;
+                }
+            }
+
+
+            for(j = 0; nomes[i][j] != ' '; j++){
+                referencia[i][k] = nomes[i][j];
+                k++;
+            }
+            referencia[i][k] = '\0';
         }
+        
+
+        if(deseja == 1){
+            printf("O nome em referencia bibliografica\n\n");
+        }
+        else{
+            printf("Os nomes em referencia bibliografica\n\n");
+        }
+        for(i = 0; i < deseja; i++){
+            printf("%s\n", referencia[i]);
+        }
+        printf("\n\n");
+    }   
+    else{
+        system("cls");
     }
-
-    for(i = 0; nome_entrada[i] != '\0'; i++){
-        if(i > ultimo)
-            qtd_sobre++;
-        if(i < primeiro)
-            qtd_nome++;
-    }
-
-    for(i = 0; nome_entrada[i] != '\0'; i++){
-        if(i < qtd_sobre){
-            nome_referencia[cont] = nome_entrada[ultimo+1+i];
-            cont++;
-        }
-        if(i == qtd_sobre){
-            i = k;
-        }
-    }
-
-    nome_referencia[cont] = ' ';
-    cont++;
-
-    for(i = 0; nome_entrada[i] != '\0'; i++){
-        if(i < qtd_nome){
-            nome_referencia[cont] = nome_entrada[j+i];
-            cont++;
-        }
-        if(i == qtd_nome){
-            i = k;
-        }
-    }
-
-    nome_entrada[cont] = '\0';
-
-    printf("\nSeu nome em referencia bibliografica: %s\n\n", nome_referencia);
-
+    
     return 0;
 }
