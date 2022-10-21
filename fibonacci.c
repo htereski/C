@@ -5,8 +5,7 @@ int main(){
     int num, i;
     int pre = 0, next = 0, current = 1;
 
-    do
-    {
+    do{
         printf("Digite um valor MAXIMO para a sequencia de Fibonacci: ");
         scanf("%d", &num);
         if(num < 1){
