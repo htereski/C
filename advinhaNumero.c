@@ -16,7 +16,6 @@ int validaEntrada(int num, int min, int max){
 int entradaJogador(int i, int min, int max){
     int num;
     int valida;
-
     do{
         printf("Tentativa [%d] Digite um numero entre %2d e %2d: ", i, min, max);
         scanf("%d", &num);
@@ -24,27 +23,26 @@ int entradaJogador(int i, int min, int max){
         if(valida == 0)
             printf("[ERRO] Digite um numero valido!!!\n");
     }while(valida == 0);
-
     return num;
 }
 
-int validaJogada(int numJogador, int num, int *min, int *max){
-    if(numJogador < num)
-        *min = numJogador;
+int validaJogada(int num_jogador, int num, int *min, int *max){
+    if(num_jogador < num)
+        *min = num_jogador;
     else
-        *max = numJogador;
+        *max = num_jogador;
 }
 
 void status(int ok, int chance){
     if(ok == 1)
-        printf("PARABENS Voce venceu com %d tentativas!!!\n\n", chance);
+        printf("PARABENS! Voce venceu com %d tentativas!!!\n\n", chance);
     else
-        printf("VOCE PERDEU mais sorte da proxima vez!!!\n\n");
+        printf("VOCE PERDEU! Mais sorte da proxima vez!!!\n\n");
 }
 
-int fimJogo(int chance, int num, int numJogador){
+int fimJogo(int chance, int num, int num_jogador){
     if(chance < 11){
-        if(num == numJogador){
+        if(num == num_jogador){
             return 1;
         }
     }
@@ -54,19 +52,17 @@ int fimJogo(int chance, int num, int numJogador){
 int jogada(){
     int min = 1, max = 99;
     int chance = 1;
-    int numJogador;
+    int num_jogador;
     int numero = criarNumero();
     int ok = 0;
-
     do{
-        numJogador = entradaJogador(chance, min, max);
-        validaJogada(numJogador, numero, &min, &max);
-        if(numJogador != numero)
+        num_jogador = entradaJogador(chance, min, max);
+        validaJogada(num_jogador, numero, &min, &max);
+        if(num_jogador != numero)
             chance++;
         else
             ok = 1;
-    }while(fimJogo(chance, numero, numJogador) == 0);
-
+    }while(fimJogo(chance, numero, num_jogador) == 0);
     status(ok, chance);
 }
 
