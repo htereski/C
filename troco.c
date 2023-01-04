@@ -17,19 +17,18 @@ int main(){
     do{
         printf("Digite a quantia de dinheiro do cliente: ");
         scanf("%f", &valor_cliente);
-
         if(valor_produto > valor_cliente)
             printf("\nEsta faltando %.1f\n", valor_produto - valor_cliente);
     }while(valor_produto > valor_cliente);
     system("cls");
 
-    if(valor_produto < valor_cliente){
+    printf("******************Troco******************\n");
+    printf("%.2f - %.2f = %f\n\n", valor_cliente, valor_produto, valor_cliente - valor_produto);
 
+
+    if(valor_produto < valor_cliente){
         float troco = valor_cliente - valor_produto;
         int notas;
-
-        printf("******************Troco******************\n");
-        printf("%.2f - %.2f = %f\n\n", valor_cliente, valor_produto, valor_cliente - valor_produto);
 
         if(troco / 200 >= 1.0){
             notas = troco / 200.0;
@@ -98,6 +97,5 @@ int main(){
         }
         printf("\n\n");
     }
-
     return 0;
 }
