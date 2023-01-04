@@ -1,109 +1,127 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <time.h>
-
 #define TAM 5
 
-int main(){
+typedef struct{
+    char *String;
+    char *Vogais;
+}Palavra;
 
-    char string[TAM];
-    char vogais[TAM];
-    int i, j, falhou;
-    char troca;
-    int posicao[TAM];
+Palavra *elemento;
 
+void gerarString();
+void stringVogais();
+void ordenarString();
+void atribuirVogais();
+void ordenarVogais();
+
+int main(){  
+    gerarString();
+    stringVogais();
+    ordenarString();
+    atribuirVogais();
+    ordenarVogais();
+    return 0;
+}
+
+void gerarString(){
     srand(time(NULL));
-
-    for(i = 0; i < TAM; i++)
-        posicao[i] = -1;
-
-    i = 0;
-    do{
+    int i = 0, j;
+    int falhou;
+    elemento = malloc(sizeof(Palavra));
+    elemento->String = malloc(TAM * sizeof(char));
+    while(i < TAM){
         falhou = 0;
-        string[i] = 65 + rand() % 57;
+        elemento->String[i] = 65 + rand() % 57;
         for(j = 0; j < i; j++){
-            if(string[i] == string[j])
+            if(elemento->String[i] == elemento->String[j]){
                 falhou = 1;
+                break;
+            }
         }
-        if(string[i] > 90 && string[i] < 97)
+        if(elemento->String[i] > 90 && elemento->String[i] < 97)
             falhou = 1;
         if(falhou == 0)
             i++;
-    } while (i < TAM);
+    };
+    elemento->String[i] = '\0';
+    printf("\nString original: %s", elemento->String);
+}
 
-    printf("\nString original: ");
-    for(i = 0; i < TAM; i++)
-        printf("%c ", string[i]);
-
-
+void stringVogais(){
+    int i;
     printf("\n\nString vogais: ");
     for(i = 0; i < TAM; i++)
-        if(string[i] == 65 || string[i] == 69 || string[i] == 73 || string[i] == 79 || string[i] == 85 || string[i] == 97 || string[i] == 101 || string[i] == 105 || string[i] == 111 || string[i] == 117){
-            printf("%c ", string[i]);
-        }
+        if(elemento->String[i] == 65 || elemento->String[i] == 69 || elemento->String[i] == 73 || elemento->String[i] == 79 || elemento->String[i] == 85 || elemento->String[i] == 97 || elemento->String[i] == 101 || elemento->String[i] == 105 || elemento->String[i] == 111 || elemento->String[i] == 117)
+            printf("%c ", elemento->String[i]);
+}
 
+void ordenarString(){
+    int i, j, troca;
     for(i = 0; i < TAM; i++){
         for(j = 0; j < i; j++){
-            if(string[j] > string[i]){
-                troca = string[j];
-                string[j] = string[i];
-                string[i] = troca;
+            if(elemento->String[j] > elemento->String[i]){
+                troca = elemento->String[j];
+                elemento->String[j] = elemento->String[i];
+                elemento->String[i] = troca;
             }
         }
     }
+}
+
+void atribuirVogais(){
+    int i, j, posicao[TAM];
+    int tam = 0;
+    for(i = 0; i < TAM; i++)
+        posicao[i] = -1;
     
     for(i = 0; i < TAM; i++){
-        if(string[i] == 65 || string[i] == 69 || string[i] == 73 || string[i] == 79 || string[i] == 85 || string[i] == 97 || string[i] == 101 || string[i] == 105 || string[i] == 111 || string[i] == 117){
+        if(elemento->String[i] == 65 || elemento->String[i] == 69 || elemento->String[i] == 73 || elemento->String[i] == 79 || elemento->String[i] == 85 || elemento->String[i] == 97 || elemento->String[i] == 101 || elemento->String[i] == 105 || elemento->String[i] == 111 || elemento->String[i] == 117){
             posicao[i] = i;
+            tam++;
         }
     }
-
     j = 0;
+    elemento->Vogais = malloc(tam * sizeof(char));
     for(i = 0; i < TAM; i++){
         if(posicao[i] != -1){
-            if(j == 0){
-                vogais[j] = string[posicao[i]];
-                j++;
-            }
-            else{
-                vogais[j] = string[posicao[i]];
-                j++;
-            }
+            elemento->Vogais[j] = elemento->String[posicao[i]];
+            j++;
         }
     }
+    elemento->Vogais[j] = '\0';
+}
 
-    vogais[j] = '\0';
-
-    for(i = 0; vogais[i] != '\0'; i++){
+void ordenarVogais(){
+    int i, j;
+    char troca;
+    for(i = 0; elemento->Vogais[i] != '\0'; i++){
         for(j = 0; j < i; j++){
-            if(vogais[j] != 65 && vogais[i] == 97){
-                troca = vogais[j];
-                vogais[j] = vogais[i];
-                vogais[i] = troca;
+            if(elemento->Vogais[j] != 65 && elemento->Vogais[i] == 97){
+                troca = elemento->Vogais[j];
+                elemento->Vogais[j] = elemento->Vogais[i];
+                elemento->Vogais[i] = troca;
             }
-            else if(vogais[j] != 65 && vogais[j] != 97 && vogais[j] != 69 && vogais[i] == 101){
-                troca = vogais[j];
-                vogais[j] = vogais[i];
-                vogais[i] = troca;
+            else if(elemento->Vogais[j] != 65 && elemento->Vogais[j] != 97 && elemento->Vogais[j] != 69 && elemento->Vogais[i] == 101){
+                troca = elemento->Vogais[j];
+                elemento->Vogais[j] = elemento->Vogais[i];
+                elemento->Vogais[i] = troca;
             }
-            else if(vogais[j] != 65 && vogais[j] != 97 && vogais[j] != 69 && vogais[j] != 101 && vogais[j] != 73 && vogais[i] == 105){
-                troca = vogais[j];
-                vogais[j] = vogais[i];
-                vogais[i] = troca;
+            else if(elemento->Vogais[j] != 65 && elemento->Vogais[j] != 97 && elemento->Vogais[j] != 69 && elemento->Vogais[j] != 101 && elemento->Vogais[j] != 73 && elemento->Vogais[i] == 105){
+                troca = elemento->Vogais[j];
+                elemento->Vogais[j] = elemento->Vogais[i];
+                elemento->Vogais[i] = troca;
             }
-            else if(vogais[j] != 65 && vogais[j] != 97 && vogais[j] != 69 && vogais[j] != 101 && vogais[j] != 73 && vogais[j] != 105 && vogais[j] != 79 && vogais[i] == 111){
-                troca = vogais[j];
-                vogais[j] = vogais[i];
-                vogais[i] = troca;
+            else if(elemento->Vogais[j] != 65 && elemento->Vogais[j] != 97 && elemento->Vogais[j] != 69 && elemento->Vogais[j] != 101 && elemento->Vogais[j] != 73 && elemento->Vogais[j] != 105 && elemento->Vogais[j] != 79 && elemento->Vogais[i] == 111){
+                troca = elemento->Vogais[j];
+                elemento->Vogais[j] = elemento->Vogais[i];
+                elemento->Vogais[i] = troca;
             }
         }
     }
-
     printf("\n\nString vogais ordenadas: ");
-    for(i = 0; vogais[i] != '\0'; i++)
-        printf("%c ", vogais[i]);
-
+    for(i = 0; elemento->Vogais[i] != '\0'; i++)
+        printf("%c ", elemento->Vogais[i]);
     printf("\n\n");
-    
-
-    return 0;
 }
