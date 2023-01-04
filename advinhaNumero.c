@@ -3,12 +3,12 @@
 
 int criarNumero(){
     srand(time(NULL));
-    int numero = 1 + rand() % 98;
+    int numero = 1 + rand() % 99;
     return numero;    
 }
 
 int validaEntrada(int num, int min, int max){
-    if(num < 1 || num > 99 || num <= min || num >= max)
+    if(num < 1 || num > 100 || num <= min || num >= max)
         return 0;
     return 1;
 }
@@ -50,7 +50,7 @@ int fimJogo(int chance, int num, int num_jogador){
 }
 
 int jogada(){
-    int min = 1, max = 99;
+    int min = 1, max = 100;
     int chance = 1;
     int num_jogador;
     int numero = criarNumero();
