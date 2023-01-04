@@ -12,6 +12,7 @@ typedef struct{
 Pessoa *usuario;
 
 int validarEntradaNome(char nome[]);
+int verificarNome(char nome[]);
 void preencherNome();
 int encontrarUltimoEspaco();
 int nomeTemSobrenome(int espaco);
@@ -28,11 +29,20 @@ int main(){
 
 int validarEntradaNome(char nome[]){
     int i;
-    for(i = 0; nome[i] != '\0'; i++){
+    for(i = 0; nome[i] != '\0'; i++)
         if(nome[i] != ' ')
             return 1;
-    }
     return 0;
+}
+
+int verificarNome(char nome[]){
+    int i;
+    for(i = 0; nome[i] != '\0'; i++)
+        if(nome[i] == ' ' && nome[i+1] == ' ')
+            return 0;
+        else if(nome[i] == ' ' && nome[i+1] == '\0')
+            return 1;
+    return 2;
 }
 
 void preencherNome(){
@@ -47,7 +57,17 @@ void preencherNome(){
             system("pause");
             system("cls");
         }
-    }while(validarEntradaNome(aux) == 0);
+        else if(verificarNome(aux) == 0){
+            printf("[Erro] Nao coloque mais do que um espaco para separar o nome!\n\n");
+            system("pause");
+            system("cls");
+        }
+        else if(verificarNome(aux) == 1){
+            printf("[Erro] Nao termine o nome com espaco em branco!\n\n");
+            system("pause");
+            system("cls");
+        }
+    }while(validarEntradaNome(aux) == 0 || verificarNome(aux) != 2);
     usuario = malloc(sizeof(Pessoa));
     usuario->nome = malloc(strlen(aux) * sizeof(char));
     strcpy(usuario->nome, aux);
@@ -56,21 +76,18 @@ void preencherNome(){
 int encontrarUltimoEspaco(){
     int i;
     int espaco = 0;
-    for(i = 0; usuario->nome[i] != '\0'; i++){
-        if(usuario->nome[i] == ' '){
+    for(i = 0; usuario->nome[i] != '\0'; i++)
+        if(usuario->nome[i] == ' ')
             espaco = i;
-        }
-    }
     return espaco;
 }
 
 int nomeTemSobrenome(int espaco){
     int i;
     if(espaco != 0){
-        for(i = espaco; usuario->nome[i] != '\0'; i++){
+        for(i = espaco; usuario->nome[i] != '\0'; i++)
             if(usuario->nome[i] != ' ')
                 return 1;
-        }
     }
     return 0;
 }
@@ -117,6 +134,7 @@ void referenciaBibliografica(){
             j++;
         }
     }
+    aux[j] = '\0';
     usuario->nome_bibliografico = malloc(strlen(aux) * sizeof(char));
     strcpy(usuario->nome_bibliografico, aux);
 }
