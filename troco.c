@@ -1,10 +1,8 @@
 #include <stdio.h>
 
 int main(){
-
     float valor_produto;
     float valor_cliente;
-
 
     do{
         printf("Digite o preco do produto: ");
